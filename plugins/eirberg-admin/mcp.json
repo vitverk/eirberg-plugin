@@ -1,0 +1,20 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "eirberg": {
+      "type": "streamable-http",
+      "url": "https://vinnslan.eirberg.app/mcp/eirberg",
+      "extensions": {
+        "com.openai": {
+          "auth": {
+            "type": "oauth",
+            "client": { "mode": "dcr" },
+            "resource": "https://vinnslan.eirberg.app/mcp/eirberg",
+            "baseScopes": ["merchant:read"],
+            "defaultScopes": ["merchant:read", "merchant:write"]
+          }
+        }
+      }
+    }
+  }
+}

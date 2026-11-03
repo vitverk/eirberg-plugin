@@ -1,0 +1,46 @@
+{
+  "name": "eirberg-admin",
+  "version": "0.1.0-alpha.1",
+  "description": "A staff-only Eirberg admin workspace for ChatGPT and Codex. Preview package; service activation is pending.",
+  "author": {
+    "name": "Vitverk",
+    "url": "https://github.com/vitverk"
+  },
+  "homepage": "https://github.com/vitverk/eirberg-plugin",
+  "repository": "https://github.com/vitverk/eirberg-plugin",
+  "keywords": [
+    "eirberg",
+    "medusa",
+    "commerce",
+    "admin",
+    "mcp"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Eirberg Store Admin",
+    "shortDescription": "Manage Eirberg in ChatGPT",
+    "longDescription": "An admin workspace for authorized Eirberg staff, connected through Vitverk. The initial integration supports news and homepage banners, with draft previews, reviewed changes and operation receipts. Store access and permitted actions are determined by your staff account and connection consent. This alpha distributes the installation package; the merchant service is not yet active. Installing it does not make the backend available or grant store access.",
+    "developerName": "Vitverk",
+    "category": "Business & Operations",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/vitverk/eirberg-plugin",
+    "supportURL": "https://github.com/vitverk/eirberg-plugin/blob/main/SUPPORT.md",
+    "logo": "./assets/icon.png",
+    "composerIcon": "./assets/icon.png",
+    "defaultPrompt": [
+      "Open the Eirberg admin workspace.",
+      "Show my Eirberg news drafts.",
+      "Help me review changes to the Eirberg homepage banners."
+    ]
+  },
+  "extensions": {
+    "com.openai": {
+      "onboardingSkill": "./skills/setup/SKILL.md"
+    }
+  }
+}

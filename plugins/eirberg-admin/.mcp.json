@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "eirberg": {
+      "type": "http",
+      "url": "https://vinnslan.eirberg.app/mcp/eirberg"
+    }
+  }
+}

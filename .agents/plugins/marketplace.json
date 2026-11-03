@@ -1,0 +1,12 @@
+{
+  "name": "vitverk-eirberg",
+  "interface": { "displayName": "Eirberg by Vitverk" },
+  "plugins": [
+    {
+      "name": "eirberg-admin",
+      "source": { "source": "local", "path": "./plugins/eirberg-admin" },
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
+      "category": "Business & Operations"
+    }
+  ]
+}
