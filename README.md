@@ -55,7 +55,9 @@ includes the marketplace and is not the same as the standalone plugin archive.
 
 The package configures `https://mcp.eirberg.app/mcp` with OAuth discovery and dynamic
 client registration. Sign in through the Eirberg connection flow with your existing
-Medusa staging staff account. The connection requests read access and offers write
+Medusa staging staff account's native email/password login. A Vitverk-only SSO session
+is not reused, and this plugin does not provision passwords or staff accounts.
+The connection requests read access and offers write
 access; explicit consent and current Medusa permissions determine what you can do.
 The hosted service lives in [`vitverk/eirberg`](https://github.com/vitverk/eirberg).
 It does not require Vitverk OS, its vault, or desktop-installer provisioning.

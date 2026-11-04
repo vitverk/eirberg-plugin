@@ -14,7 +14,9 @@ This is an alpha installation package. It does not deploy or activate any servic
 | Optional write scope | `merchant:write`, subject to explicit consent and native Medusa permissions |
 | Live staff / ChatGPT acceptance | Pending |
 
-Staff authenticate against Medusa through the Eirberg connection flow. Medusa remains
+Staff authenticate against Medusa through the Eirberg connection flow using their
+existing native email/password login. Vitverk-only SSO sessions are not reused, and
+passwords are not automatically provisioned. Medusa remains
 the authority for users, roles, record access, merchant mutations and operation receipts.
 The service does not depend on Vitverk OS, its secret vault, or desktop installers.
 
