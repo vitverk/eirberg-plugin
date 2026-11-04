@@ -1,6 +1,6 @@
 {
   "name": "eirberg-admin",
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0-alpha.2",
   "description": "A staff-only Eirberg admin workspace for ChatGPT and Codex. Preview package; service activation is pending.",
   "author": {
     "name": "Vitverk",
@@ -20,7 +20,7 @@
   "interface": {
     "displayName": "Eirberg Store Admin",
     "shortDescription": "Manage Eirberg in ChatGPT",
-    "longDescription": "An admin workspace for authorized Eirberg staff, connected through Vitverk. The initial integration supports news and homepage banners, with draft previews, reviewed changes and operation receipts. Store access and permitted actions are determined by your staff account and connection consent. This alpha distributes the installation package; the merchant service is not yet active. Installing it does not make the backend available or grant store access.",
+    "longDescription": "An admin workspace for authorized Eirberg staff, connected directly to Eirberg’s hosted MCP service and Medusa. The initial integration supports news and homepage banners, with draft previews, reviewed changes and operation receipts. Store access and permitted actions are determined by your Medusa staging staff account and connection consent. This alpha distributes the installation package; the merchant service is not yet active. Installing it does not make the backend available or grant store access.",
     "developerName": "Vitverk",
     "category": "Business & Operations",
     "capabilities": [

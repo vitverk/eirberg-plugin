@@ -12,7 +12,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parent.parent
 PLUGIN = ROOT / "plugins/eirberg-admin"
-ENDPOINT = "https://vinnslan.eirberg.app/mcp/eirberg"
+ENDPOINT = "https://mcp.eirberg.app/mcp"
 FILES = {
     "plugin.json", "mcp.json", ".codex-plugin/plugin.json", ".mcp.json",
     "skills/setup/SKILL.md", "skills/manage-eirberg/SKILL.md",

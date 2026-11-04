@@ -4,10 +4,10 @@
 
 Installation package for Eirberg's staff admin plugin in ChatGPT and Codex, maintained by Vitverk.
 
-**Preview — service activation pending.** The package is prepared for marketplace import;
-host import has not yet been verified. Store connection and admin tools are not working yet. On 2026-11-03, the canonical
-merchant endpoint and OAuth discovery endpoints returned 404. No live store access
-or end-to-end ChatGPT installation has been verified.
+**Preview — service activation pending.** This package targets Eirberg's independent
+MCP service at `https://mcp.eirberg.app/mcp`. The service is being prepared for Medusa
+staging; deployment, live staff access and end-to-end ChatGPT installation remain
+unverified. Package validation does not establish that the service is available.
 
 The initial integration covers news and homepage banners: drafts, previews, reviewed
 publication and operation receipts. Access is restricted to authorized Eirberg staff.
@@ -40,25 +40,30 @@ codex plugin add eirberg-admin@vitverk-eirberg
 ```
 
 Alternatively, use `/plugins` to install **Eirberg Store Admin** from **Eirberg by Vitverk**.
-Start a new chat after connection. For a fixed preview version:
-
-```sh
-codex plugin marketplace add vitverk/eirberg-plugin --ref v0.1.0-alpha.1
-```
+Start a new chat after connection. Use `main` for this endpoint change until a new
+release is published.
 
 See the [plugin packaging guide](https://developers.openai.com/plugins/build/plugins).
 This repository is a distribution source, not a universal Plugins Directory listing.
 
-The [preview release](https://github.com/vitverk/eirberg-plugin/releases/tag/v0.1.0-alpha.1)
-also provides a standalone plugin ZIP and checksum. The repository's source ZIP includes
-the marketplace and is not the same as the standalone plugin archive.
+The earlier [alpha.1 release](https://github.com/vitverk/eirberg-plugin/releases/tag/v0.1.0-alpha.1)
+uses the retired Vitverk-hosted endpoint. It does not contain this change. Build the
+current standalone plugin ZIP with the command below; the repository's source ZIP
+includes the marketplace and is not the same as the standalone plugin archive.
 
 ## Connect when the service is activated
 
-The package configures `https://vinnslan.eirberg.app/mcp/eirberg` with OAuth discovery
-and dynamic client registration. Sign in through Vitverk using your existing staff
-account and select the assigned Eirberg store. The connection requests read access
-and offers write access; consent and native store permissions determine what you can do.
+The package configures `https://mcp.eirberg.app/mcp` with OAuth discovery and dynamic
+client registration. Sign in through the Eirberg connection flow with your existing
+Medusa staging staff account's native email/password login. A Vitverk-only SSO session
+is not reused, and this plugin does not provision passwords or staff accounts.
+The connection requests read access and offers write
+access; explicit consent and current Medusa permissions determine what you can do.
+The hosted service lives in [`vitverk/eirberg`](https://github.com/vitverk/eirberg).
+It does not require Vitverk OS, its vault, or desktop-installer provisioning.
+
+Existing installations must update the package and connect to the new server.
+The previous endpoint and its OAuth grants are not carried forward.
 No password, client secret, API key or manually copied token belongs in this repository.
 
 Run the packaged setup workflow, then try:
