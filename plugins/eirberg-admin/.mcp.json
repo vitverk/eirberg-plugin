@@ -2,7 +2,7 @@
   "mcpServers": {
     "eirberg": {
       "type": "http",
-      "url": "https://vinnslan.eirberg.app/mcp/eirberg"
+      "url": "https://mcp.eirberg.app/mcp"
     }
   }
 }

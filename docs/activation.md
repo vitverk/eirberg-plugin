@@ -2,33 +2,39 @@
 
 This is an alpha installation package. It does not deploy or activate any service.
 
-| Item | Status on 2026-11-03 |
+| Item | Status on 2026-11-04 |
 | --- | --- |
-| Canonical merchant endpoint | `https://vinnslan.eirberg.app/mcp/eirberg`, confirmed from Eirberg instance configuration and merchant route source |
-| Unauthenticated endpoint probe | HTTP 404 |
-| Protected resource metadata | `/.well-known/oauth-protected-resource/mcp/eirberg`, HTTP 404 |
-| Authorization server metadata | `/.well-known/oauth-authorization-server`, HTTP 404 |
-| OAuth design | Public client, PKCE S256, dynamic registration; separate merchant resource and consent |
+| Canonical merchant endpoint | `https://mcp.eirberg.app/mcp`, selected for the independent Eirberg service |
+| Service source | [`vitverk/eirberg`](https://github.com/vitverk/eirberg), `apps/merchant-mcp` |
+| Backend target | Medusa staging only; production access is not enabled by this package |
+| Protected resource metadata | `https://mcp.eirberg.app/.well-known/oauth-protected-resource/mcp`, pending deployment verification |
+| Authorization server metadata | `https://mcp.eirberg.app/.well-known/oauth-authorization-server`, pending deployment verification |
+| OAuth contract | Public client, PKCE S256, dynamic registration; resource audience is the exact MCP endpoint |
 | Read scope | `merchant:read` |
-| Optional write scope | `merchant:write`, subject to explicit consent and native permissions |
+| Optional write scope | `merchant:write`, subject to explicit consent and native Medusa permissions |
 | Live staff / ChatGPT acceptance | Pending |
 
-The endpoint is source-confirmed, not operationally verified. Do not replace it with a
-general Vitverk MCP endpoint: that is a different tool surface and authorization resource.
+Staff authenticate against Medusa through the Eirberg connection flow. Medusa remains
+the authority for users, roles, record access, merchant mutations and operation receipts.
+The service does not depend on Vitverk OS, its secret vault, or desktop installers.
 
-Portable `mcp.json` declares the OAuth resource and read/write scopes. The legacy
-`.mcp.json` fallback supplies the HTTP endpoint and relies on host/server discovery.
+This replaces the previous Vitverk-hosted endpoint. The alpha.1 package and its release
+ZIP still reference that endpoint; update the package and create a new connection.
+Previous OAuth grants are not migrated, and no compatibility redirect is promised.
+
+Portable `mcp.json` declares the OAuth resource and read/write scopes. The Codex
+`.mcp.json` overlay supplies the same HTTP endpoint and relies on host/server discovery.
 Its exact scope negotiation is unverified; do not assume it grants writes. Hosts must
 honor the scope actually returned by OAuth and the service's capability response.
 
-Before announcing the plugin as usable, the service owner must complete an independently
-authorized activation: deploy the merchant integration, bind the reviewed UI artifact,
-restrict the allowed Eirberg accounts, configure required media origins, and verify OAuth,
-revocation and native staff permissions. Native MFA must work through a supported flow;
-an interactive-sign-in refusal must not be bypassed.
+Before announcing the plugin as usable, complete the Eirberg service's staging runbook:
+deploy the independent merchant Worker, bind the reviewed UI artifact, configure required
+media origins, and verify OAuth, revocation and native staff permissions. Existing Medusa
+staff accounts must be used; the connection cannot provision users or assign roles. Native
+MFA must work through a supported flow; an interactive-sign-in refusal must not be bypassed.
 
 Then verify a real supported host connection, read-only access, a reviewed synthetic change
-in an authorized test environment, its receipt, and unavailable actions. Update this status
+in staging, its receipt, and unavailable actions. Update this status
 and the listing copy only after those checks pass. A valid ZIP or successful GitHub import
 alone does not establish that the service works.
 

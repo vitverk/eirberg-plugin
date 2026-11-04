@@ -3,13 +3,13 @@
   "mcpServers": {
     "eirberg": {
       "type": "streamable-http",
-      "url": "https://vinnslan.eirberg.app/mcp/eirberg",
+      "url": "https://mcp.eirberg.app/mcp",
       "extensions": {
         "com.openai": {
           "auth": {
             "type": "oauth",
             "client": { "mode": "dcr" },
-            "resource": "https://vinnslan.eirberg.app/mcp/eirberg",
+            "resource": "https://mcp.eirberg.app/mcp",
             "baseScopes": ["merchant:read"],
             "defaultScopes": ["merchant:read", "merchant:write"]
           }
