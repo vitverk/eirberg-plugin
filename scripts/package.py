@@ -83,12 +83,8 @@ def validate():
     require(mcp["$schema"] == "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json", "Wrong MCP schema")
     require(set(mcp["mcpServers"]) == {"eirberg"}, "Unexpected bundled server")
     server = mcp["mcpServers"]["eirberg"]
-    require(server["type"] == "streamable-http" and server["url"] == ENDPOINT, "Wrong merchant transport or endpoint")
-    auth = server["extensions"]["com.openai"]["auth"]
-    require(auth == {
-        "type": "oauth", "client": {"mode": "dcr"}, "resource": ENDPOINT,
-        "baseScopes": ["merchant:read"], "defaultScopes": ["merchant:read", "merchant:write"],
-    }, "Unexpected OAuth config; review endpoint, audience and scopes")
+    require(server == {"type": "streamable-http", "url": ENDPOINT},
+            "Expected the discovery-based merchant endpoint only; headers, credentials and extra server fields are not packaged")
     require(read_json(PLUGIN / ".mcp.json") == {"mcpServers": {"eirberg": {"type": "http", "url": ENDPOINT}}}, "Legacy MCP endpoint drift")
 
     marketplace = read_json(ROOT / ".agents/plugins/marketplace.json")
@@ -104,7 +100,7 @@ def validate():
         source = (PLUGIN / f"skills/{name}/SKILL.md").read_text(encoding="utf-8")
         require(source.startswith(f"---\nname: {name}\ndescription: "), f"Invalid skill metadata: {name}")
         require("\n---\n" in source[4:], f"Missing frontmatter boundary: {name}")
-    print(f"Validated {manifest['name']} {manifest['version']}: {len(FILES)} files; icon 512px; no credentials required")
+    print(f"Validated {manifest['name']} {manifest['version']}: {len(FILES)} files; icon 512px; no credentials packaged")
     return manifest
 
 

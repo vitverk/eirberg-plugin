@@ -4,10 +4,10 @@
 
 Installation package for Eirberg's staff admin plugin in ChatGPT and Codex, maintained by Vitverk.
 
-**Preview — service activation pending.** This package targets Eirberg's independent
-MCP service at `https://mcp.eirberg.app/mcp`. The service is being prepared for Medusa
-staging; deployment, live staff access and end-to-end ChatGPT installation remain
-unverified. Package validation does not establish that the service is available.
+**Staging test release.** Eirberg's independent MCP service is deployed at
+`https://mcp.eirberg.app/mcp`, with the shared admin UI and Medusa staging backend.
+Public connection checks pass. Each staff member must still connect their account;
+native permissions and authenticated ChatGPT rendering are verified after connection.
 
 The initial integration covers news and homepage banners: drafts, previews, reviewed
 publication and operation receipts. Access is restricted to authorized Eirberg staff.
@@ -25,8 +25,8 @@ Workspace admins can import this repository:
 Set installation and authentication policies in the workspace UI; GitHub import does not
 apply the repository's local marketplace policies.
 
-Members install it from their workspace's Plugins tab. Authentication will remain
-unavailable until the service is activated. MCP plugins imported from GitHub may be
+Members install it from their workspace's Plugins tab, then complete the Eirberg
+OAuth connection offered by their host. MCP plugins imported from GitHub may be
 marked **Desktop only**; the import result determines the supported surfaces.
 See OpenAI's [GitHub import guide](https://learn.chatgpt.com/docs/enterprise/plugin-management).
 
@@ -40,31 +40,42 @@ codex plugin add eirberg-admin@vitverk-eirberg
 ```
 
 Alternatively, use `/plugins` to install **Eirberg Store Admin** from **Eirberg by Vitverk**.
-Start a new chat after connection. Use `main` for this endpoint change until a new
-release is published.
+Start a new chat after connection. Use `main` for updates, or select a version from
+the [releases](https://github.com/vitverk/eirberg-plugin/releases).
 
 See the [plugin packaging guide](https://developers.openai.com/plugins/build/plugins).
 This repository is a distribution source, not a universal Plugins Directory listing.
 
 The earlier [alpha.1 release](https://github.com/vitverk/eirberg-plugin/releases/tag/v0.1.0-alpha.1)
-uses the retired Vitverk-hosted endpoint. It does not contain this change. Build the
-current standalone plugin ZIP with the command below; the repository's source ZIP
-includes the marketplace and is not the same as the standalone plugin archive.
+uses the retired Vitverk-hosted endpoint. Alpha.2 and later use the independent
+Eirberg service. Releases provide a standalone plugin ZIP and checksum; the repository's
+source ZIP includes the marketplace and is not the same as the standalone plugin archive.
+The package command below also builds the current standalone ZIP.
+Alpha.4 corrects bundled-server discovery in Codex 0.166.0-alpha.6; update if an
+older package exposes the setup skill but no Eirberg MCP connection.
 
-## Connect when the service is activated
+## Connect your staff account
 
 The package configures `https://mcp.eirberg.app/mcp` with OAuth discovery and dynamic
 client registration. Sign in through the Eirberg connection flow with your existing
 Medusa staging staff account's native email/password login. A Vitverk-only SSO session
 is not reused, and this plugin does not provision passwords or staff accounts.
-The connection requests read access and offers write
-access; explicit consent and current Medusa permissions determine what you can do.
+OAuth discovery requests read-only access by default, which is sufficient for setup.
+Editing requires the host's OAuth scope configuration to request `merchant:write`
+alongside `merchant:read`, followed by explicit write consent and current Medusa permission.
 The hosted service lives in [`vitverk/eirberg`](https://github.com/vitverk/eirberg).
 It does not require Vitverk OS, its vault, or desktop-installer provisioning.
 
-Existing installations must update the package and connect to the new server.
-The previous endpoint and its OAuth grants are not carried forward.
+Installations that still use the retired endpoint must update the package and connect
+to the new server. The previous endpoint and its OAuth grants are not carried forward.
 No password, client secret, API key or manually copied token belongs in this repository.
+
+Package installation, an authenticated connection, and store permissions are separate
+steps. If the Eirberg tools are missing, inspect the host's connection status and error.
+Missing tools alone do not mean staging is inactive or that Medusa denied your account.
+After the host confirms connection, start a new chat with Eirberg selected if necessary.
+The setup workflow checks actual permissions with `eirberg_get_capabilities` before
+opening the workspace and making a permitted read.
 
 Run the packaged setup workflow, then try:
 
@@ -75,7 +86,7 @@ Run the packaged setup workflow, then try:
 ## Package contents
 
 - `plugins/eirberg-admin/plugin.json`: portable Agent Plugins 1.0 manifest and listing.
-- `plugins/eirberg-admin/mcp.json`: OAuth-enabled merchant MCP connection.
+- `plugins/eirberg-admin/mcp.json`: merchant endpoint; authentication uses OAuth discovery.
 - `plugins/eirberg-admin/.codex-plugin/plugin.json` and `.mcp.json`: compatibility files.
 - `plugins/eirberg-admin/skills/`: setup and merchant workflow instructions.
 - `plugins/eirberg-admin/assets/`: existing Eirberg brand icon.
@@ -96,5 +107,9 @@ python3 scripts/package.py
 The second command creates a versioned ZIP and SHA-256 file in `dist/`. The ZIP contains
 one plugin; the repository marketplace is kept outside it. CI runs the same validation.
 Update both compatibility files when changing the portable manifests; validation catches drift.
+
+With Codex installed, also run `python3 scripts/check-codex.py`. This checks the
+package with the actual host loader and requires it to discover the bundled
+`eirberg` server. It does not install anything, sign in or access store data.
 
 See [activation status](docs/activation.md) and [support](SUPPORT.md).
